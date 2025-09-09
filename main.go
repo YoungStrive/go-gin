@@ -42,6 +42,11 @@ func main() {
 	router.GET("/test1", func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/ping")
 	})
+
+	//获取静态文件
+	router.Static("/static", "./static")
+	//不显示文件名
+	router.StaticFile("/f1", "./static/1.text")
 	port := ":8090"
 	router.Run(port)
 }
