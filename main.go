@@ -127,6 +127,17 @@ func main() {
 		c.String(200, "Hello MY IS zj")
 
 	})
+	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{
+		"yl": "123456",
+	}))
+	//再次测试 当loclhost:8090/admin/testLogin  就要认证
+	authorized.GET("/testLogin", func(c *gin.Context) {
+		// 获取用户，它是由 BasicAuth 中间件设置的
+		user := c.MustGet(gin.AuthUserKey).(string)
+		c.String(200, user)
+
+	})
+
 	port := ":8090"
 	router.Run(port)
 }
